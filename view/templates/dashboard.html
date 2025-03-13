@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Dasboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Dashboard</h1>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+    
+    <div class="row mt-4">
+        <!-- Lista de canciones -->
+        <div class="col-md-6">
+            <h2>Lista de Canciones</h2>
+            <ul class="list-group">
+                {% for song in data.songs %}
+                    <li class="list-group-item">
+                        <strong>{{ song.get_title() }}</strong> - {{ song.get_author() }} ({{ song.get_album() }})
+                    </li>
+                {% else %}
+                    <li class="list-group-item">No hay canciones disponibles</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- Lista de categorías -->
+        <div class="col-md-6">
+            <h2>Lista de Categorías</h2>
+            <ul class="list-group">
+                {% for category in data.categories %}
+                    <li class="list-group-item">{{ category.get_description() }}</li>
+                {% else %}
+                    <li class="list-group-item">No hay categorías disponibles</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    function logout() {
+        fetch("/logout", { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        auth.signOut().then(() => {});
+                        window.location.href = "/";
+                    }
+                }).catch(error => {
+            console.error("Error al cerrar sesión en Firebase:", error);
+        });
+    }
+</script>
+{% endblock %}
