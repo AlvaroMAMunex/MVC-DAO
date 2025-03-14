@@ -20,6 +20,7 @@ class FirebaseMusicgenreDAO(InterfaceMusicgenreDAO):
                 musicgenre_dto = MusicgenreDTO()
                 musicgenre_dto.set_id(musicgenre_data.get("id",""))  # ID del documento en Firestore
                 musicgenre_dto.set_description(musicgenre_data.get("description",""))
+                # Missing : Obtencion musicgenre JSON
                 musicgenres.append(musicgenre_dto)  # Agregar la canción a la lista
         except Exception as e:
             print(e)

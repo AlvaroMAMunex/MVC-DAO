@@ -36,6 +36,7 @@ class FirebaseUserDAO(InterfaceUserDAO):
                         user_dto.set_session(session)
                     except Exception as e:
                         print(e)
+                    # Missing : Obtencion userDTO JSON    
                     return user_dto
             except Exception as e:
                 print(e)

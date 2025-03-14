@@ -68,3 +68,7 @@ class SongDTO():
 
     def set_title(self, title):
         self.title = title
+    
+    def song_to_json(self):
+        # To Be Complete
+        pass

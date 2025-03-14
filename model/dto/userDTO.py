@@ -34,3 +34,7 @@ class UserDTO:
         return self.session
     def set_session(self, session):
         self.session = session
+    
+    def user_to_json(self):
+        # To Be Complete
+        pass

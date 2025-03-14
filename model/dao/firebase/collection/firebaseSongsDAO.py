@@ -27,7 +27,7 @@ class FirebaseSongDAO(InterfaceSongDAO):
                 song_dto.price = song_data.get("price", 0.0)
                 song_dto.rating = song_data.get("rating", 0)
                 song_dto.release = song_data.get("release", "")
-
+                # Missing : Obtencion songDTO JSON
                 songs.append(song_dto)  # Agregar la canción a la lista
         except Exception as e:
             print(e)

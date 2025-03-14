@@ -17,3 +17,7 @@ class MusicgenreDTO():
 
     def set_description(self, title):
         self.title = title
+    
+    def musicgenre_to_json(self):
+        # To Be Complete
+        pass
