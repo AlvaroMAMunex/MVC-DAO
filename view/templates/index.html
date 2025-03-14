@@ -9,6 +9,7 @@
     </div>
 
     <script>
+
         document.getElementById("google-login").addEventListener("click", function() {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)

@@ -1,18 +1,16 @@
 from ....dao.interfaceSongDAO import InterfaceSongDAO
-from ....dto.songDTO import SongDTO
-from ..firebaseConnector import FirebaseConnector
+from ....dto.songDTO import SongDTO, SongsDTO
+
 
 class FirebaseSongDAO(InterfaceSongDAO):
 
-    def __init__(self):
-        self.firebaseConnector = FirebaseConnector()
+    def __init__(self, collection):
+        self.collection = collection
     
     def get_songs(self):
-        songs = []
+        songs = SongsDTO()
         try:
-            songs_ref = self.firebaseConnector.get_songs_collection()
-            query = songs_ref.stream()  # Obtiene todos los documentos
-
+            query = self.collection.stream()
             for doc in query:
                 song_data = doc.to_dict()  # Convierte el documento a un diccionario
                 
@@ -27,9 +25,9 @@ class FirebaseSongDAO(InterfaceSongDAO):
                 song_dto.price = song_data.get("price", 0.0)
                 song_dto.rating = song_data.get("rating", 0)
                 song_dto.release = song_data.get("release", "")
-                # Missing : Obtencion songDTO JSON
-                songs.append(song_dto)  # Agregar la canción a la lista
+                # Transformar a JSON previo a append
+                songs.insertSong(song_dto.songdto_to_dict())  # Agregar la canción a la lista
         except Exception as e:
             print(e)
 
-        return songs
+        return songs.songlist_to_json()

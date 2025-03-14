@@ -1,4 +1,5 @@
 # model/dto/userDTO.py
+import json
 class UserDTO:
     def __init__(self):
         self.id = None
@@ -35,6 +36,13 @@ class UserDTO:
     def set_session(self, session):
         self.session = session
     
-    def user_to_json(self):
-        # To Be Complete
-        pass
+    def userdto_to_json(self):
+        dict = {
+            "id" : self.get_id(),
+            "email": self.get_email(),
+            "role": self.get_role(),
+            "exp" : self.get_exp(),
+            "session" : self.get_session()
+        }
+        user_json = json.dumps(dict)
+        return user_json

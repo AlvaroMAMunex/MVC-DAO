@@ -16,7 +16,7 @@
             <ul class="list-group">
                 {% for song in data.songs %}
                     <li class="list-group-item">
-                        <strong>{{ song.get_title() }}</strong> - {{ song.get_author() }} ({{ song.get_album() }})
+                        <strong>{{ song.title }}</strong> - {{ song.author }} ({{ song.album }})
                     </li>
                 {% else %}
                     <li class="list-group-item">No hay canciones disponibles</li>
@@ -29,7 +29,7 @@
             <h2>Lista de Categorías</h2>
             <ul class="list-group">
                 {% for category in data.categories %}
-                    <li class="list-group-item">{{ category.get_description() }}</li>
+                    <li class="list-group-item">{{ category.description }}</li>
                 {% else %}
                     <li class="list-group-item">No hay categorías disponibles</li>
                 {% endfor %}

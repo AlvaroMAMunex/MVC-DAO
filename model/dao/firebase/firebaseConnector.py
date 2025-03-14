@@ -5,7 +5,7 @@ class FirebaseConnector ():
     def __init__(self):
         try:
             if not (FirebaseConnector.firebase_app_initializated):
-                self.credentials = credentials.Certificate("Ruta Archivo Credenciales")
+                self.credentials = credentials.Certificate("model//dao//firebase//credentials.json")
                 initialize_app(self.credentials)
             self.db = firestore.client()
             print("Connection to Firebase Firestore initialized successfully.")
@@ -20,6 +20,7 @@ class FirebaseConnector ():
         return self.db
     
     def get_user_collection(self):
+        print("GET USER COLLECTION")
         if self.db is None:
             print("Database connection is not initialized.")
         return self.db.collection("users")

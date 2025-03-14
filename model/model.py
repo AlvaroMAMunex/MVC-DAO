@@ -12,6 +12,7 @@ class Model ():
         pass
 
     def checking_user_token(self, token):
+        print("Checking user")
         user = self.userDAO.checking_user(token)
         return user
     

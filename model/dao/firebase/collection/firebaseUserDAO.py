@@ -1,10 +1,10 @@
 from ....dao.interfaceUserDAO import InterfaceUserDAO
 from ....dto.userDTO import UserDTO
-from ..firebaseConnector import FirebaseConnector
 
 class FirebaseUserDAO(InterfaceUserDAO):
-    def __init__(self):
-        self.firebaseConnector = FirebaseConnector()
+    def __init__(self, collection, connector):
+        self.collection = collection
+        self.firebaseConnector = connector
  
     def checking_user(self, token):
         user_token = self.firebaseConnector.verify_token(token)
@@ -14,8 +14,7 @@ class FirebaseUserDAO(InterfaceUserDAO):
         user_dto = UserDTO()
         if user_id:
             try:
-                users_collection = self.firebaseConnector.get_user_collection()
-                query = users_collection.where("user_id", "==", user_id).limit(1).stream()
+                query = self.collection.where("user_id", "==", user_id).limit(1).stream()
                 user_res= next(query, None)
                 if not user_res or not user_res.exists:
                     print("USER DAO: Usuario no encontrado en Firestore")
@@ -36,10 +35,9 @@ class FirebaseUserDAO(InterfaceUserDAO):
                         user_dto.set_session(session)
                     except Exception as e:
                         print(e)
-                    # Missing : Obtencion userDTO JSON    
-                    return user_dto
+                    return user_dto.userdto_to_json()
             except Exception as e:
                 print(e)
         else:
             print("USER DAO: INCORRECTO")
-            return user_dto
+            return user_dto.userdto_to_json()

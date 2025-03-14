@@ -1,9 +1,22 @@
+import json
+
+class SongsDTO():
+    def __init__(self):
+        self.songlist = []
+
+    def insertSong(self, elem):
+        self.songlist.append(elem)
+
+    def songlist_to_json(self):
+        return json.dumps(self.songlist)
+
+
 class SongDTO():
     def __init__(self):
         self.album = None
         self.author = None
         self.id = None
-        self.duration = None
+        self.duration = None  # Corregido (antes length)
         self.musicgenre = None
         self.price = None
         self.rating = None
@@ -12,8 +25,8 @@ class SongDTO():
 
     def is_Empty(self):
         return (self.album is None and self.author is None and self.id is None and
-            self.duration is None and self.musicgenre is None and self.price is None and
-            self.rating is None and self.release is None and self.title is None)
+                self.duration is None and self.musicgenre is None and self.price is None and
+                self.rating is None and self.release is None and self.title is None)
 
     def get_album(self):
         return self.album
@@ -33,11 +46,11 @@ class SongDTO():
     def set_id(self, id):
         self.id = id
 
-    def get_length(self):
-        return self.length
+    def get_duration(self):
+        return self.duration
 
-    def set_length(self, length):
-        self.length = length
+    def set_duration(self, duration):
+        self.duration = duration
 
     def get_musicgenre(self):
         return self.musicgenre
@@ -68,7 +81,17 @@ class SongDTO():
 
     def set_title(self, title):
         self.title = title
+
+    def songdto_to_dict(self):
+        return {
+            "album": self.album,
+            "author": self.author,
+            "id": self.id,
+            "duration": self.duration,
+            "musicgenre": self.musicgenre,
+            "price": self.price,
+            "rating": self.rating,
+            "release": str(self.release),
+            "title": self.title
+        }
     
-    def song_to_json(self):
-        # To Be Complete
-        pass

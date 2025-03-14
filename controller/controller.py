@@ -4,7 +4,7 @@ from firebase_admin import auth
 from datetime import datetime
 from view.view import View
 from model.model import Model
-
+import json
 #Inicializamos FastAPI
 app = FastAPI()
 
@@ -24,16 +24,16 @@ async def login(data: dict, response: Response, provider: str):
     print("LLEGO LOGIN")
     token = data.get("token")
     try:
-        userDTO = mymodelcomponent.checking_user_token(token)
-        if userDTO.is_Empty():
+        userDTO_dict = json.loads(mymodelcomponent.checking_user_token(token))
+        print("USER JSON")
+        print(userDTO_dict)
+        if userDTO_dict['id'] == "":
             print("dto EMPTY")
-            #return {"success": False, "error": "Invalid token"}
-            return {"success": True}
+            return {"success": False, "error": "Invalid token"}
         else:
-            user_id = userDTO.get_id()
-            print("CONTROLE USER_ID:",user_id)
-            sessions[user_id] = userDTO.get_session()
-            print(sessions)
+            user_id = userDTO_dict["id"]
+            print("CONTROLER - LOGIN - USER_ID:",user_id)
+            sessions[user_id] = userDTO_dict["session"]
             response.set_cookie(key="session_id", value=user_id, httponly=True)
             return {"success": True}
     except Exception as e:
@@ -65,9 +65,9 @@ def dashboard(request: Request):
             else:
                 # Sesion activa y soy admin, hago llamada a modelo
                 print("SESION NO EXPIRADA")
-                songs = mymodelcomponent.get_songs()
+                songs = json.loads(mymodelcomponent.get_songs())
                 print(songs)
-                music_genres = mymodelcomponent.get_musicgenres()
+                music_genres = json.loads(mymodelcomponent.get_musicgenres())
                 print(music_genres)
                 data = {
                     "songs" : songs,
